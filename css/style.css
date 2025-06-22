@@ -4,9 +4,46 @@ html {
     font-size: 100%;
 }
 
-.current-item {
-    font-size: 50px;
+.breadClumb {
+    margin-bottom: 50px;
 }
+
+.current-item {
+    font-size: 25px;
+}
+
+/* ページネーションの汎用スタイル */
+.nav-links ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.nav-links li>* {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    height: 45px;
+}
+
+.nav-links li>*:not(.dots) {
+    width: 45px;
+    border-radius: 50%;
+    color: #000000;
+    background: #efefef;
+    transition: color 0.3s ease, background 0.3s ease;
+}
+
+.nav-links li>.current,
+.nav-links li>a:hover {
+    color: #ffffff;
+    background: #000000;
+}
+
+
+
 
 /*
 フッターを画面下に配置するために、

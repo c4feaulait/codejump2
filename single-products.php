@@ -17,7 +17,12 @@
                     <h1 class="page-title"><?php the_title(); ?></h1>
                     <div id="item">
                         <div class="item-img">
-                            <img src="img/item1.jpg" alt="">
+                            <?php
+                            $id = get_post_thumbnail_id();
+                            $img = wp_get_attachment_image_src($id);
+                            ?>
+
+                            <img src="<?php echo $img[0] ?>" alt="">
                         </div>
                         <div class="item-text">
                             <p>
@@ -38,6 +43,18 @@
                                 <dd>テキスト</dd>
                                 <dt>MATERIAL：</dt>
                                 <dd>テキストテキストテキスト</dd>
+                                <dt>生産国：</dt>
+                                <dd>
+                                    <?php $terms = get_the_terms(get_the_ID(), 'genre'); ?>
+                                    <?php if ($terms): ?>
+                                            <?php foreach ($terms as $term): ?>
+                                                <a href="<?php echo get_term_link($term); ?>">
+                                                <p><?php echo esc_html($term->name); ?></p>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        <? endif; ?>
+                                    </a>
+                                </dd>
                             </dl>
 
                             <?php the_content(); ?>
