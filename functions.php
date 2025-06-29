@@ -56,57 +56,89 @@ add_action('init', function(){
 
 // カスタム分類の追加（カスタムタクソノミー）
 add_action('init', function() {
-    register_taxonomy('genre', 'products', [
+    register_taxonomy('country', 'products', [
         'label' => '生産国',
         'hierarchical' => true,
         'show in rest' => true, //エディタ上に表示する
     ]);
 });
 
-// ページネーション
-function pagination($pages = '', $range = 2) { //$pages=>総ページ数。''の場合は自動取得、$range=>現在のページの前後何ページを取得するか
-  $showitems = ($range * 2) + 1;
+add_action('init', function() {
+    register_taxonomy('animal', 'products', [
+        'label' => '動物',
+        'hierarchical' => true,
+        'show in rest' => true, //エディタ上に表示する
+    ]);
+});
 
-  // 現在のページ数
-    global $paged;
-    if(empty($paged)) {
-    $paged = 1;
+// 絞り込み機能
+function get_search_terms($taxonomy) {
+    // var_dump($taxonomy);
+    $html = '';
+
+    // 引数のタクソノミーに登録されているタームを取得
+    $terms = get_terms([
+        'taxonomy' => $taxonomy,
+    ]);
+    // var_dump($terms);
+
+    // htmlでselectの枠組みを作る
+    $html .= '<select name="' . esc_attr($taxonomy) . '" id="' . esc_attr($taxonomy) . '">'; 
+    // var_dump($html);
+    
+    foreach ( $terms as $term ) {
+        $html .= '<option value="' . esc_attr($term->slug) . '">' . esc_html($term->name) . '</option>';
+    }
+    $html .= '</select>';
+    
+    echo $html;
+}
+
+function get_search_tax_array() {
+    $tax_args = [
+        'public' => true,
+        '_builtin' => false,
+    ];
+
+    $taxonomies = get_taxonomies($tax_args); //$tax_argsで指定した条件でタクソノミー名を配列で取得
+
+    //GETで存在するタクソノミーを連想配列に格納
+    $tax_array = []; // 配列を格納するための箱を用意
+
+    foreach ($taxonomies as $taxonomy) {
+        if ( !empty($_GET[$taxonomy]) ) { //クエリパラメータ（例：?country=japan）があるかどうか確認
+            $tax_array[$taxonomy] = $_GET[$taxonomy]; //連想配列として加える ('country' => 'japan')
+            var_dump($_GET[$taxonomy]);
+        }
     }
 
-  // 全ページ数
-    if($pages == '') {
-    global $wp_query;
-    $pages = $wp_query->max_num_pages;
-    if(!$pages) {
-        $pages = 1;
+    return $tax_array;
+}
+
+function get_search_args($array, $paged) {
+    $args = [
+        'post_type' => 'products',
+        'post_status' => 'publish',
+        'orderby' => [
+            'date' => 'DESC',
+            'ID' => 'DESC'
+        ],
+        'paged' => $paged,
+    ];
+
+    $tax_query = [];
+    foreach($array as $key => $value) { //$keyはタクソノミー名、$valueはその値　上記例では$key=country、$value=japan
+        $tax_query[] = [
+            'taxonomy' => $key,
+            'field' => 'slug',
+            'terms' => $value
+        ];    
     }
+
+    if(count($tax_query) > 0) {
+        $tax_query['relation'] = 'AND';
+        $args += ['tax_query' => $tax_query];
     }
 
-  // ページ数が2ぺージ以上の場合のみ、ページネーションを表示
-    //if(1 != $pages) {
-    //echo '<div class="pagination">';
-    //echo '<ul>';
-    // 1ページ目でなければ、「前のページ」リンクを表示
-    // if($paged > 1) {
-    //     echo '<li class="prev"><a href="' . esc_url(get_pagenum_link($paged - 1)) . '">前のページ</a></li>';
-    // }
-
-    // ページ番号を表示（現在のページはリンクにしない）
-    // for ($i=1; $i <= $pages; $i++) {
-    //     if (1 != $pages &&(!($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems )) {
-    //     if ($paged == $i) {
-    //         echo '<li class="active">' .$i. '</li>';
-    //     } else {
-    //         echo '<li><a href="' . esc_url(get_pagenum_link($i)) . '">' .$i. '</a></li>';
-    //     }
-    //     }
-    // }
-
-    // 最終ページでなければ、「次のページ」リンクを表示
-    // if ($paged < $pages) {
-    //     echo '<li class="next"><a href="' . esc_url(get_pagenum_link($paged + 1)) . '">次のページ</a></li>';
-    // }
-    // echo '</ul>';
-    // echo '</div>';
-    // }
+    return $args;
 }

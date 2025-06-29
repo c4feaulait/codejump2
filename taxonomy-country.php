@@ -36,7 +36,7 @@
                                     <?php $color = get_post_meta(get_the_ID(), 'color', true); ?> <!--get_the_ID()で投稿のIDを取得-->
                                     <?php $size = get_post_meta(get_the_ID(), 'size', true); ?> <!--get_the_ID()で投稿のIDを取得-->
                                     <p>&yen<?php echo $price; ?>+tax</p>
-                                    <?php $terms = get_the_terms(get_the_ID(), 'genre');
+                                    <?php $terms = get_the_terms(get_the_ID(), 'country');
                                     // var_dump($term);
                                     ?>
                                     <?php if ($terms): ?>

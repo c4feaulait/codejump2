@@ -42,6 +42,16 @@ html {
     background: #000000;
 }
 
+/* カテゴリリスト */
+.category {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.category__item {
+    margin-right: 20px;
+}
+
 
 
 

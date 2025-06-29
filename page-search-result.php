@@ -2,7 +2,18 @@
 <html lang="ja">
 
 <head>
-    <?php get_header(); ?>
+    <?php
+    get_header();
+
+    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1; //現在表示しているページのページ番号を取得 →１ページ目は空 → $paged=1にする
+
+    $tax_array =  get_search_tax_array(); //$_GETにある送信内容取得を行う
+
+    $args = get_search_args($tax_array, $paged); //検索用の条件を取得する
+
+    // 検索用クエリ
+    $wp_query = new WP_Query($args);
+    ?>
 </head>
 
 <body>
@@ -23,11 +34,9 @@
 
             <ul class="product-list">
                 <?php
-                $paged = get_query_var('paged') ? get_query_var('paged') : 1 ;
-                $args = array('post_type' => 'products', 'posts_per_page' => 8, 'paged' => $paged); ?>
-                <?php $posts = get_posts($args); ?>
-                <?php foreach ($posts as $post): ?>
-                    <?php setup_postdata($post); ?>
+                if ( $wp_query->have_posts() ) :?>
+                    <?php while ( $wp_query->have_posts()) : $wp_query->the_post();?>
+
                     <li>
                         <a href="<?php the_permalink(); ?>">
                             <?php
@@ -62,8 +71,10 @@
                             </ul>
                         </a>
                     </li>
-                    
-                <?php endforeach; ?>
+                    <?php endwhile ?>
+                <?php else: ?>
+                        <p>該当の投稿はありません</p>
+                <?php endif?>
                 <?php wp_reset_postdata(); ?>
 
             </ul>
@@ -83,4 +94,3 @@
 </body>
 
 </html>
-

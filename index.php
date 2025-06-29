@@ -3,6 +3,7 @@
 
 <head>
     <?php get_header(); ?>
+    
 </head>
 
 <body>
@@ -12,9 +13,11 @@
 
     <main>
         <div id="top" class="wrapper">
-        <div class="breadClumb">
-        <?php echo get_template_part('template-parts/bread')?>
-        </div>
+            <div class="breadClumb">
+                <?php echo get_template_part('template-parts/bread') ?>
+
+                <?php echo get_template_part('template-parts/search-form'); ?>
+            </div>
             <ul class="product-list">
                 <?php $args = array('post_type' => 'products', 'posts_per_page' => 8); ?>
                 <?php $posts = get_posts($args); ?>
@@ -32,14 +35,28 @@
                             <?php $price = get_post_meta(get_the_ID(), 'price', true); ?> <!--get_the_ID()で投稿のIDを取得-->
                             <p>&yen<?php echo $price; ?>+tax</p>
 
-                            <?php $terms = get_the_terms(get_the_ID(), 'genre');
-                            // var_dump($term);
-                            ?>
-                            <?php if ($terms): ?>
-                                <?php foreach ($terms as $term): ?>
-                                    <p><a href="<?php echo get_term_link($term); ?>"><?php echo esc_html($term->name); ?></a></p>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <ul class="category">
+                                <li class="category__item">
+                                    <?php $terms = get_the_terms(get_the_ID(), 'country');
+                                    // var_dump($term);
+                                    ?>
+                                    <?php if ($terms): ?>
+                                        <?php foreach ($terms as $term): ?>
+                                            <p><a href="<?php echo get_term_link($term); ?>"><?php echo esc_html($term->name); ?></a></p>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </li>
+                                <li class="category__item">
+                                    <?php $termsAnimal = get_the_terms(get_the_ID(), 'animal');?>
+                                    <?php if ($termsAnimal): ?>
+                                        <?php foreach ($termsAnimal as $termAnimal): ?>
+                                            <p><a href="<?php echo get_term_link($termAnimal); ?>"><?php echo esc_html($termAnimal->name); ?></a></p>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </li>
+                            </ul>
+
+
                         </a>
                     </li>
                 <?php endforeach; ?>
@@ -48,8 +65,8 @@
             </ul>
 
 
-            
-                    <!-- <div class="content">
+
+            <!-- <div class="content">
                         <?php get_search_form(); ?>
                     </div> -->
 
