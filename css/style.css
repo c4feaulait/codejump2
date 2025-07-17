@@ -12,6 +12,143 @@ html {
     font-size: 25px;
 }
 
+.dropdown {
+    display: inline-block;
+    font-size: 14px;
+}
+
+/* 会社概要 */
+.company {
+    padding-top: 80px;
+}
+
+.single-container {
+    padding: 0 50px;
+}
+
+.wp-block-heading {
+    margin: 20px 0;
+}
+
+.section__title {
+    font-weight: bold;
+    font-size: 3.2rem;
+}
+
+.table {
+    width: 100%;
+}
+
+tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 50px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 16px;
+    border-bottom: 1px solid #333;
+}
+
+th {
+    grid-column: 1 / 2;
+    background-color: #c9c6c6;
+    /* color: #fff; */
+}
+tr {
+    grid-column: 2 / 3;
+}
+
+
+/*
+    -----------------------------------------------------------------
+    以下
+    ------------------------------------------------------------------
+/*
+
+
+/* ① ここから */
+.dropdown__btn {
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 5px 15px 5px 8px;
+    text-align: left;
+    min-width: 150px;
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown__btn::after {
+    content: '';
+    position: absolute;
+    border: 4px solid #333;
+    border-bottom: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    top: calc(50% - 3px);
+    right: 10px;
+    width: 0;
+    height: 0;
+}
+
+.dropdown__btn:hover {
+    background-color: rgba(83, 172, 217, 0.1);
+}
+
+/* ① ここまで */
+
+.dropdown__menu-layer {
+    /* ② */
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: none;
+    /* ③ */
+}
+
+.dropdown__menu-layer--show {
+    /* ④ */
+    display: block;
+}
+
+.dropdown__menu {
+    /* ⑤ */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.16);
+    width: 160px;
+    position: absolute;
+    top: 40px;
+    padding: 4px;
+}
+
+.dropdown__item {
+    /* ⑥ */
+    font-size: 13px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.dropdown__item:hover {
+    background-color: rgba(102, 102, 102, 0.1);
+}
+
+.dropdown__item--active {
+    /* ⑦ */
+    background-color: rgba(189, 216, 252, 0.3);
+}
+
+.select {
+    padding-bottom: 500px;
+}
+
 /* ページネーションの汎用スタイル */
 .nav-links ul {
     list-style: none;

@@ -66,13 +66,18 @@
 
 
 
-            <!-- <div class="content">
-                        <?php get_search_form(); ?>
-                    </div> -->
 
             <a class="link-text" href="<?php echo esc_attr(home_url('/products')); ?>">View More</a>
         </div>
 
+
+    </div>
+    <select name="" id="select" class="select">
+        <option value="">選択してください</option>
+        <option value="1">メニュー1</option>
+        <option value="2">メニュー2</option>
+        <option value="3">メニュー3</option>
+    </select>
 
 
     </main>
