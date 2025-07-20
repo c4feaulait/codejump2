@@ -60,12 +60,163 @@ tr {
     grid-column: 2 / 3;
 }
 
+/*
+/* -----------------------------------------------------------------
+/* FAQ
+/* ------------------------------------------------------------------
+*/
+.faq {
+    --faq-font-color: #030303;
+    --faq-icon-font-color: #FFFFFF;
+    --faq-icon-q-color: #FFA51E;
+    --faq-icon-a-color: #16416B;
+    --faq-border-color: #E3E3E3;
+}
+
+/* デフォルトの「-」,FAQカテゴリ非表示 */
+.ewd-ufaq-faq-title .ewd-ufaq-post-margin-symbol,
+.ewd-ufaq-faq-category-title ,
+.ewd-ufaq-faq-categories {
+    display: none;
+}
+
+/* 初期のpadding, marginを消す */
+.faq .ewd-ufaq-faq-div {
+    padding: 0;
+    margin: 0;
+}
+
+.ewd-ufaq-faqs .ewd-ufaq-faq-body {
+    padding: 0;
+}
+
+.faq .ewd-ufaq-faq-category,
+.faq .ewd-ufaq-faq-category-inner {
+    margin: 0;
+}
+
+/* 各設問 */
+.faq .ewd-ufaq-faq-div {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--faq-border-color);
+}
+
+/* 質問文 */
+.faq .ewd-ufaq-faq-title-text {
+    display: grid;
+    grid-template: "icon ." / 36px 1fr;
+    width: 100%;
+    padding-top: 20px;
+}
+
+.ewd-ufaq-faqs .ewd-ufaq-faq-title-text h4 {
+    position: relative;
+    margin: 0 !important; /* 初期値に!important */
+    width: 100%;
+    font-weight: 400;
+    color: var(--faq-font-color);
+    grid-column: 2 / 3;
+    padding-block: 6.5px;
+    padding-left: 22px;
+}
+
+.ewd-ufaq-faqs .ewd-ufaq-faq-title-text h4::after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-right: 2px solid var(--faq-font-color);
+    border-bottom: 2px solid var(--faq-font-color);
+    top: 50%;
+    right: 0;
+    transform: translate(-100%, -50%)  rotate(45deg);
+    transform-origin: center;
+    transition: all .3s;
+}
+
+.ewd-ufaq-post-active .ewd-ufaq-faq-title-text h4::after {
+    transform: translate(-100%, -50%)  rotate(225deg);
+}
+
+/* 回答文 */
+.ewd-ufaq-faqs .ewd-ufaq-faq-body {
+    display: block;
+}
+
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post {
+    display: grid;
+    grid-template: "icon ." / 36px 1fr;
+    max-height: 0;
+    overflow: hidden;
+    transition: all .4s;
+}
+
+.ewd-ufaq-post-active .ewd-ufaq-post-margin.ewd-ufaq-faq-post {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    max-height: 30vh;
+}
+
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post p {
+    grid-column: 2 / 3;
+    padding-left: 22px;
+}
+
+.ewd-ufaq-faqs {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--faq-font-color);
+}
+
+/* faqアイコン */
+.ewd-ufaq-faq-title-text::before,
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post::before {
+    display: block;
+    grid-area: icon;
+    align-self: center;
+    color: var(--faq-icon-font-color);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1;
+    text-align: center;
+}
+
+.ewd-ufaq-faq-title-text::before {
+    content: 'Q';
+}
+
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post::before {
+    content: 'A';
+}
+
+.ewd-ufaq-faq-title-text::after,
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post::after {
+    position: absolute;
+    display: block;
+    content: '';
+    grid-area: icon;
+    align-self: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.ewd-ufaq-faq-title-text::after {
+    background-color: var(--faq-icon-q-color);
+}
+
+.ewd-ufaq-post-margin.ewd-ufaq-faq-post::after {
+    background-color: var(--faq-icon-a-color);
+}
+
 
 /*
-    -----------------------------------------------------------------
-    以下
-    ------------------------------------------------------------------
-/*
+/* -----------------------------------------------------------------
+/* 以下
+/* ------------------------------------------------------------------
+*/
 
 
 /* ① ここから */
